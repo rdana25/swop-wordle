@@ -275,31 +275,35 @@ function buildEmojiGrid(guesses, wordLength, won) {
 }
 
 // ─── WATERMELON RAIN ─────────────────────────────────────────────────────────
-function WatermelonRain({ headerHeight }) {
+function WatermelonRain({ startY }) {
   const [melons] = useState(() =>
-    Array.from({ length: 24 }, (_, i) => ({
+    Array.from({ length: 22 }, (_, i) => ({
       id: i,
-      left: 3 + Math.random() * 91,
-      delay: Math.random() * 2.5,
-      duration: 2.2 + Math.random() * 1.8,
-      size: 1.3 + Math.random() * 1.1,
+      burstX: ((Math.random() - 0.5) * 80).toFixed(1),   // vw, -40 to +40
+      burstY: (-(Math.random() * 18 + 4)).toFixed(1),     // vh, upward pop
+      delay: (Math.random() * 0.35).toFixed(2),
+      duration: (2.6 + Math.random() * 1.6).toFixed(2),
+      size: (1.4 + Math.random() * 1.1).toFixed(2),
       cw: Math.random() > 0.5,
-      rotDeg: 280 + Math.floor(Math.random() * 160),
+      rot: (250 + Math.floor(Math.random() * 220)),
     }))
   )
 
   return (
-    <div className="wm-rain" style={{ '--hh': `${headerHeight}px` }} aria-hidden="true">
+    <div className="wm-rain" aria-hidden="true">
       {melons.map(w => (
         <span
           key={w.id}
           className={`wm ${w.cw ? 'wm-cw' : 'wm-ccw'}`}
           style={{
-            left: `${w.left}%`,
-            animationDelay: `${w.delay.toFixed(2)}s`,
-            animationDuration: `${w.duration.toFixed(2)}s`,
-            fontSize: `${w.size.toFixed(2)}rem`,
-            '--rot': `${w.rotDeg}deg`,
+            top: `${startY}px`,
+            animationDelay: `${w.delay}s`,
+            animationDuration: `${w.duration}s`,
+            fontSize: `${w.size}rem`,
+            '--bx': `${w.burstX}vw`,
+            '--by': `${w.burstY}vh`,
+            '--rot': `${w.rot}deg`,
+            '--fall': `calc(100dvh - ${startY}px + 60px)`,
           }}
         >
           🍉
@@ -321,7 +325,7 @@ function ResultScreen({ won, word, guesses, wordLength, onPlayAgain }) {
     const measure = () => {
       const rect = congratsRef.current.getBoundingClientRect()
       const header = document.querySelector('.header')
-      setRainTop(header ? header.getBoundingClientRect().bottom : 64)
+      setRainTop(header ? header.getBoundingClientRect().bottom + 8 : 70)
     }
     measure()
     window.addEventListener('resize', measure)
@@ -338,7 +342,7 @@ function ResultScreen({ won, word, guesses, wordLength, onPlayAgain }) {
 
   return (
     <div className="result-screen">
-      {won && rainTop > 0 && <WatermelonRain headerHeight={rainTop} />}
+      {won && rainTop > 0 && <WatermelonRain startY={rainTop} />}
 
       {won ? (
         <div className="congrats-block">
