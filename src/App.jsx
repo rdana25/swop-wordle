@@ -320,7 +320,8 @@ function ResultScreen({ won, word, guesses, wordLength, onPlayAgain }) {
     if (!won || !congratsRef.current) return
     const measure = () => {
       const rect = congratsRef.current.getBoundingClientRect()
-      setRainTop(rect.top - 40)
+      const header = document.querySelector('.header')
+      setRainTop(header ? header.getBoundingClientRect().bottom : 64)
     }
     measure()
     window.addEventListener('resize', measure)
