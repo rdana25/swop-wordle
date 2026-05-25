@@ -274,6 +274,37 @@ function buildEmojiGrid(guesses, wordLength, won) {
   return { score, rows }
 }
 
+// ─── WATERMELON RAIN ─────────────────────────────────────────────────────────
+const WATERMELONS = Array.from({ length: 22 }, (_, i) => ({
+  id: i,
+  left: `${4 + Math.floor((i * 37 + i * i * 13) % 92)}%`,
+  delay: `${((i * 0.31 + (i % 5) * 0.2) % 1.8).toFixed(2)}s`,
+  duration: `${(1.8 + (i * 0.17 % 1.2)).toFixed(2)}s`,
+  size: `${1.4 + (i % 4) * 0.35}rem`,
+  spin: i % 2 === 0 ? 'spin-cw' : 'spin-ccw',
+}))
+
+function WatermelonRain() {
+  return (
+    <div className="wm-rain" aria-hidden="true">
+      {WATERMELONS.map(w => (
+        <span
+          key={w.id}
+          className={`wm ${w.spin}`}
+          style={{
+            left: w.left,
+            animationDelay: w.delay,
+            animationDuration: w.duration,
+            fontSize: w.size,
+          }}
+        >
+          🍉
+        </span>
+      ))}
+    </div>
+  )
+}
+
 // ─── RESULT SCREEN ───────────────────────────────────────────────────────────
 function ResultScreen({ won, word, guesses, wordLength, onPlayAgain }) {
   const [copied, setCopied] = useState(false)
@@ -289,11 +320,20 @@ function ResultScreen({ won, word, guesses, wordLength, onPlayAgain }) {
 
   return (
     <div className="result-screen">
-      <div className={`result-badge ${won ? 'win' : 'lose'}`}>
-        {won ? 'You guessed it!' : 'Better luck next time'}
-      </div>
+      {won && <WatermelonRain />}
 
-      <div className="result-word">{word}</div>
+      {won ? (
+        <div className="congrats-block">
+          <div className="congrats-text">Congratulations!</div>
+          <div className="congrats-word">{word}</div>
+        </div>
+      ) : (
+        <>
+          <div className="result-badge lose">Better luck next time</div>
+          <div className="result-word">{word}</div>
+        </>
+      )}
+
       <p className="result-score">
         {won
           ? `Solved in ${guesses.length} of ${MAX_ATTEMPTS} attempts`

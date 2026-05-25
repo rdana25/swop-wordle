@@ -631,6 +631,85 @@ body::before {
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* ─── WATERMELON RAIN ─── */
+.wm-rain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 500;
+  overflow: hidden;
+}
+
+.wm {
+  position: absolute;
+  top: -80px;
+  display: inline-block;
+  animation: wmFall linear infinite;
+  will-change: transform;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+}
+
+.spin-cw  { animation-name: wmFallCW; }
+.spin-ccw { animation-name: wmFallCCW; }
+
+@keyframes wmFallCW {
+  0%   { transform: translateY(0)    rotate(0deg);   opacity: 0; }
+  8%   { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+}
+
+@keyframes wmFallCCW {
+  0%   { transform: translateY(0)    rotate(0deg);    opacity: 0; }
+  8%   { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(105vh) rotate(-360deg); opacity: 0; }
+}
+
+/* ─── CONGRATS BLOCK ─── */
+.congrats-block {
+  text-align: center;
+  margin-bottom: 8px;
+  animation: congratsPop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.congrats-text {
+  font-family: 'Unbounded', sans-serif;
+  font-size: clamp(26px, 7vw, 44px);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #f0f0f0 0%, #7c6bff 45%, #ff6b9d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.congrats-word {
+  font-family: 'Unbounded', sans-serif;
+  font-size: clamp(36px, 10vw, 58px);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--green) 0%, #7adb74 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 24px rgba(83,141,78,0.5));
+  animation: wordGlow 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes congratsPop {
+  0%   { opacity: 0; transform: scale(0.5) translateY(20px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes wordGlow {
+  from { filter: drop-shadow(0 0 10px rgba(83,141,78,0.4)); }
+  to   { filter: drop-shadow(0 0 30px rgba(83,141,78,0.8)); }
+}
+
 @media (max-width: 380px) {
   .key { min-width: 26px; font-size: 11px; height: 48px; }
   .key.wide { max-width: 54px; }
