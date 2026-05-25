@@ -312,7 +312,20 @@ function WatermelonRain({ headerHeight }) {
 // ─── RESULT SCREEN ───────────────────────────────────────────────────────────
 function ResultScreen({ won, word, guesses, wordLength, onPlayAgain }) {
   const [copied, setCopied] = useState(false)
+  const [rainTop, setRainTop] = useState(0)
+  const congratsRef = useRef(null)
   const { score, rows } = buildEmojiGrid(guesses, wordLength, won)
+
+  useEffect(() => {
+    if (!won || !congratsRef.current) return
+    const measure = () => {
+      const rect = congratsRef.current.getBoundingClientRect()
+      setRainTop(rect.bottom + 8)
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [won])
 
   function handleCopy() {
     const text = `Zizi Wordle — ${word.length}-letter word\n${score}\n\n${rows.join('\n')}\n\nPlay at swoplabs.com`
@@ -324,10 +337,10 @@ function ResultScreen({ won, word, guesses, wordLength, onPlayAgain }) {
 
   return (
     <div className="result-screen">
-      {won && <WatermelonRain headerHeight={document.querySelector('.header')?.offsetHeight ?? 64} />}
+      {won && rainTop > 0 && <WatermelonRain headerHeight={rainTop} />}
 
       {won ? (
-        <div className="congrats-block">
+        <div className="congrats-block" ref={congratsRef}>
           <div className="congrats-text">Congratulations!</div>
           <div className="congrats-word">{word}</div>
         </div>
