@@ -676,7 +676,7 @@ body::before {
 
 .congrats-text {
   font-family: 'Unbounded', sans-serif;
-  font-size: clamp(26px, 7vw, 44px);
+  font-size: clamp(20px, 5.5vw, 36px);
   font-weight: 900;
   letter-spacing: -0.02em;
   line-height: 1.1;
