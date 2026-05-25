@@ -634,17 +634,18 @@ body::before {
 /* ─── WATERMELON RAIN ─── */
 .wm-rain {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 500;
-  overflow: hidden;
 }
 
 .wm {
   position: absolute;
-  top: -80px;
+  top: -90px;
   display: inline-block;
-  animation: wmFall linear infinite;
   will-change: transform;
   filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
 }
@@ -653,17 +654,19 @@ body::before {
 .spin-ccw { animation-name: wmFallCCW; }
 
 @keyframes wmFallCW {
-  0%   { transform: translateY(0)    rotate(0deg);   opacity: 0; }
-  8%   { opacity: 1; }
-  90%  { opacity: 1; }
-  100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+  0%   { transform: translateY(0) rotate(0deg);                    opacity: 0; }
+  6%   { opacity: 1; }
+  85%  { opacity: 1; }
+  96%  { transform: translateY(calc(100dvh + 80px)) rotate(340deg); opacity: 0.6; }
+  100% { transform: translateY(calc(100dvh + 120px)) rotate(360deg); opacity: 0; }
 }
 
 @keyframes wmFallCCW {
-  0%   { transform: translateY(0)    rotate(0deg);    opacity: 0; }
-  8%   { opacity: 1; }
-  90%  { opacity: 1; }
-  100% { transform: translateY(105vh) rotate(-360deg); opacity: 0; }
+  0%   { transform: translateY(0) rotate(0deg);                      opacity: 0; }
+  6%   { opacity: 1; }
+  85%  { opacity: 1; }
+  96%  { transform: translateY(calc(100dvh + 80px)) rotate(-340deg); opacity: 0.6; }
+  100% { transform: translateY(calc(100dvh + 120px)) rotate(-360deg); opacity: 0; }
 }
 
 /* ─── CONGRATS BLOCK ─── */
