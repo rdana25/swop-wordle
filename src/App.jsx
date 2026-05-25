@@ -320,7 +320,7 @@ function ResultScreen({ won, word, guesses, wordLength, onPlayAgain }) {
     if (!won || !congratsRef.current) return
     const measure = () => {
       const rect = congratsRef.current.getBoundingClientRect()
-      setRainTop(rect.bottom + 6)
+      setRainTop(rect.top - 40)
     }
     measure()
     window.addEventListener('resize', measure)
