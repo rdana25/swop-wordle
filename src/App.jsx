@@ -280,7 +280,7 @@ function ResultScreen({ won, word, guesses, wordLength, onPlayAgain }) {
   const { score, rows } = buildEmojiGrid(guesses, wordLength, won)
 
   function handleCopy() {
-    const text = `SWOP Wordle — ${word.length}-letter word\n${score}\n\n${rows.join('\n')}\n\nPlay at swoplabs.com`
+    const text = `Zizi Wordle — ${word.length}-letter word\n${score}\n\n${rows.join('\n')}\n\nPlay at swoplabs.com`
     navigator.clipboard.writeText(text).then(() => {
       setCopied(true)
       setTimeout(() => setCopied(false), 2500)
@@ -515,7 +515,7 @@ export default function App() {
             ← Back
           </button>
         )}
-        <div className="logo">SWOP Wordle</div>
+        <div className="logo">Zizi Wordle</div>
         <div className="header-badge">{gameData ? `${gameData.l} letters` : 'Beta'}</div>
       </header>
 

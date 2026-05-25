@@ -1,4 +1,4 @@
-# SWOP Wordle
+# Zizi Wordle
 
 A custom Wordle-style word challenge game. Pick a word, send the link to friends, and see who guesses it in fewer tries.
 
