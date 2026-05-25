@@ -681,7 +681,7 @@ body::before {
   font-size: clamp(26px, 7vw, 44px);
   font-weight: 900;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #f0f0f0 0%, #7c6bff 45%, #ff6b9d 100%);
+  background: linear-gradient(135deg, #000000 0%, #ffffff 30%, #009736 60%, #ce1126 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
