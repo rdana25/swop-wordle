@@ -275,27 +275,31 @@ function buildEmojiGrid(guesses, wordLength, won) {
 }
 
 // ─── WATERMELON RAIN ─────────────────────────────────────────────────────────
-const WATERMELONS = Array.from({ length: 22 }, (_, i) => ({
-  id: i,
-  left: `${4 + Math.floor((i * 37 + i * i * 13) % 92)}%`,
-  delay: `${((i * 0.31 + (i % 5) * 0.2) % 1.8).toFixed(2)}s`,
-  duration: `${(1.8 + (i * 0.17 % 1.2)).toFixed(2)}s`,
-  size: `${1.4 + (i % 4) * 0.35}rem`,
-  spin: i % 2 === 0 ? 'spin-cw' : 'spin-ccw',
-}))
+function WatermelonRain({ headerHeight }) {
+  const [melons] = useState(() =>
+    Array.from({ length: 24 }, (_, i) => ({
+      id: i,
+      left: 3 + Math.random() * 91,
+      delay: Math.random() * 2.5,
+      duration: 2.2 + Math.random() * 1.8,
+      size: 1.3 + Math.random() * 1.1,
+      cw: Math.random() > 0.5,
+      rotDeg: 280 + Math.floor(Math.random() * 160),
+    }))
+  )
 
-function WatermelonRain() {
   return (
-    <div className="wm-rain" aria-hidden="true">
-      {WATERMELONS.map(w => (
+    <div className="wm-rain" style={{ '--hh': `${headerHeight}px` }} aria-hidden="true">
+      {melons.map(w => (
         <span
           key={w.id}
-          className={`wm ${w.spin}`}
+          className={`wm ${w.cw ? 'wm-cw' : 'wm-ccw'}`}
           style={{
-            left: w.left,
-            animationDelay: w.delay,
-            animationDuration: w.duration,
-            fontSize: w.size,
+            left: `${w.left}%`,
+            animationDelay: `${w.delay.toFixed(2)}s`,
+            animationDuration: `${w.duration.toFixed(2)}s`,
+            fontSize: `${w.size.toFixed(2)}rem`,
+            '--rot': `${w.rotDeg}deg`,
           }}
         >
           🍉
@@ -320,7 +324,7 @@ function ResultScreen({ won, word, guesses, wordLength, onPlayAgain }) {
 
   return (
     <div className="result-screen">
-      {won && <WatermelonRain />}
+      {won && <WatermelonRain headerHeight={document.querySelector('.header')?.offsetHeight ?? 64} />}
 
       {won ? (
         <div className="congrats-block">

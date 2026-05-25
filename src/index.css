@@ -643,30 +643,28 @@ body::before {
 }
 
 .wm {
-  position: absolute;
-  top: -90px;
+  position: fixed;
+  top: var(--hh, 64px);
   display: inline-block;
-  will-change: transform;
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+  will-change: transform, opacity;
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.35));
+  animation-timing-function: cubic-bezier(0.25, 0.1, 0.3, 1);
+  animation-iteration-count: infinite;
 }
 
-.spin-cw  { animation-name: wmFallCW; }
-.spin-ccw { animation-name: wmFallCCW; }
+.wm-cw  { animation-name: wmFallCW; }
+.wm-ccw { animation-name: wmFallCCW; }
 
 @keyframes wmFallCW {
-  0%   { transform: translateY(0) rotate(0deg);                    opacity: 0; }
-  6%   { opacity: 1; }
-  85%  { opacity: 1; }
-  96%  { transform: translateY(calc(100dvh + 80px)) rotate(340deg); opacity: 0.6; }
-  100% { transform: translateY(calc(100dvh + 120px)) rotate(360deg); opacity: 0; }
+  0%   { transform: translateY(0)   rotate(0deg);           opacity: 1; }
+  92%  { opacity: 1; }
+  100% { transform: translateY(calc(100dvh - var(--hh, 64px) + 40px)) rotate(var(--rot, 300deg)); opacity: 0; }
 }
 
 @keyframes wmFallCCW {
-  0%   { transform: translateY(0) rotate(0deg);                      opacity: 0; }
-  6%   { opacity: 1; }
-  85%  { opacity: 1; }
-  96%  { transform: translateY(calc(100dvh + 80px)) rotate(-340deg); opacity: 0.6; }
-  100% { transform: translateY(calc(100dvh + 120px)) rotate(-360deg); opacity: 0; }
+  0%   { transform: translateY(0)   rotate(0deg);            opacity: 1; }
+  92%  { opacity: 1; }
+  100% { transform: translateY(calc(100dvh - var(--hh, 64px) + 40px)) rotate(calc(var(--rot, 300deg) * -1)); opacity: 0; }
 }
 
 /* ─── CONGRATS BLOCK ─── */
@@ -681,12 +679,29 @@ body::before {
   font-size: clamp(26px, 7vw, 44px);
   font-weight: 900;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #000000 0%, #ffffff 30%, #009736 60%, #ce1126 100%);
+  line-height: 1.1;
+  margin-bottom: 12px;
+  background: linear-gradient(
+    105deg,
+    #aaaaaa 0%,
+    #ffffff 20%,
+    #eeeeee 35%,
+    #ffffff 50%,
+    #cccccc 65%,
+    #ffffff 80%,
+    #aaaaaa 100%
+  );
+  background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  line-height: 1.1;
-  margin-bottom: 12px;
+  animation: sparkleShimmer 2s linear infinite;
+  filter: drop-shadow(0 0 12px rgba(255,255,255,0.7)) drop-shadow(0 0 30px rgba(255,255,255,0.4));
+}
+
+@keyframes sparkleShimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
 }
 
 .congrats-word {
