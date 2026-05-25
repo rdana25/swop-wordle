@@ -320,7 +320,7 @@ function ResultScreen({ won, word, guesses, wordLength, onPlayAgain }) {
     if (!won || !congratsRef.current) return
     const measure = () => {
       const rect = congratsRef.current.getBoundingClientRect()
-      setRainTop(rect.bottom + 8)
+      setRainTop(rect.bottom + 6)
     }
     measure()
     window.addEventListener('resize', measure)
@@ -340,8 +340,8 @@ function ResultScreen({ won, word, guesses, wordLength, onPlayAgain }) {
       {won && rainTop > 0 && <WatermelonRain headerHeight={rainTop} />}
 
       {won ? (
-        <div className="congrats-block" ref={congratsRef}>
-          <div className="congrats-text">Congratulations!</div>
+        <div className="congrats-block">
+          <div className="congrats-text" ref={congratsRef}>Congratulations!</div>
           <div className="congrats-word">{word}</div>
         </div>
       ) : (
