@@ -462,7 +462,7 @@ function GameScreen({ gameData, onBack }) {
           winRow={winRow}
         />
 
-        <Keyboard onKey={handleKey} letterStates={letterStates} />
+        <Keyboard onKey={handleKey} letterStates={{}} />
       </div>
     </>
   )
